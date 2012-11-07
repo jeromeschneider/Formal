@@ -67,7 +67,7 @@ class Checkbox extends \Formal\Element {
 		}
 		
 		if($this->option("refreshonchange") === TRUE) {
-			$onchange = " onchange=\"document.getElementsByTagName('form')[0].submit();\" ";
+			$onchange = " onchange=\"document.getElementsByTagName('form')[0].elements['refreshed'].value=1;document.getElementsByTagName('form')[0].submit();\" ";
 		}
 		
 		$sHtml =<<<HTML

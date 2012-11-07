@@ -201,7 +201,7 @@ class Form {
 			call_user_func($aHook, $this, $oMorpho);
 		}
 		
-		if(empty($this->aErrors)) {
+		if(!$this->refreshed() && empty($this->aErrors)) {
 			
 			# Model object is persisted
 			# Last chance to generate a confirm message corresponding to what *was* submitted ("Creating", instead of "Editing")
@@ -390,6 +390,7 @@ class Form {
 		$sHtml =<<<HTML
 <form class="form-horizontal" action="{$sActionUrl}" method="post" enctype="multipart/formdata">
 	<input type="hidden" name="{$sSubmittedFlagName}" value="1" />
+	<input type="hidden" name="refreshed" value="0" />
 	<fieldset>
 		<legend style="line-height: 40px;">{$this->sDisplayTitle}</legend>
 		{$this->sDisplayMessage}
@@ -411,5 +412,9 @@ HTML;
 	
 	public function submitted() {
 		return intval(\Flake\Util\Tools::POST($this->submitSignatureName())) === 1;
+	}
+
+	public function refreshed() {
+		return intval(\Flake\Util\Tools::POST("refreshed")) === 1;
 	}
 }
